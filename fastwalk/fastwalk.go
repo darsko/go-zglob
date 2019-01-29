@@ -96,20 +96,6 @@ func FastWalk(root string, walkFn func(path string, typ os.FileMode) error) erro
 			if err != nil {
 				// Signal to the workers to close.
 				close(w.donec)
-
-				// Drain the results channel from the other workers which
-				// haven't returned yet.
-				go func() {
-					for {
-						select {
-						case _, ok := <-w.resc:
-							if !ok {
-								return
-							}
-						}
-					}
-				}()
-
 				wg.Wait()
 				return err
 			}

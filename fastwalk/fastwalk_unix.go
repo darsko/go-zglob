@@ -36,7 +36,7 @@ func readDir(dirName string, fn func(dirName, entName string, typ os.FileMode) e
 			bufp = 0
 			nbuf, err = syscall.ReadDirent(fd, buf)
 			if err != nil {
-				return os.NewSyscallError("readdirent", err)
+				return nil
 			}
 			if nbuf <= 0 {
 				return nil
